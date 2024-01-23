@@ -15,7 +15,7 @@ class Hero(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    hero_powers = db.relationship('Heropower', backref = 'hero')
+    hero_powers = db.relationship('HeroPower', backref = 'hero')
 
     def _repr_(self):
         return f'<The heroes name is {self.name} and his super name is {self.super_name}>'
