@@ -26,7 +26,35 @@ def home():
 @app.route('/heroes')
 def heroes():
     heroes_list = [hero.to_dict() for hero in Hero.query.all()]
-    return make_response(jsonify(heroes_list),200)    
+    return make_response(jsonify(heroes_list),200)
+
+@app.route('/heroes/<int:id>')
+def heroes_by_id(id):
+    hero = Hero.query.filter_by(id=id).first()
+
+    if hero:
+        hero_data = hero.to_dict()
+        return make_response(jsonify(hero_data), 200)
+
+    else:
+        error = {"error": "Hero not found"}
+        return make_response(jsonify(error), 404)
+
+@app.route('/powers')
+def powers():
+
+    powers = []
+
+    for power in Power.query.all():
+        data = {
+            "id": power.id,
+            "name":power.name,
+            "description":power.description
+        }    
+        powers.append(data)
+
+    return make_response(jsonify(powers), 200)
+
 
 
 if __name__ == '__main__':
